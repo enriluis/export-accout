@@ -5,6 +5,7 @@ This script exports user accounts stored in the Zimbra LDAP database. The output
 henrik@domain.com,Display Name,{SSHA512}cHG6xXTUNGwRtfFh3U+1OyOcndfwwclvJ6/RMykjtMiLSt1b4sQCtM/f,2048
 
 You can later import the generated output file into your Mailcow installation using the addMailboxes-1.0.1-linux tool.
+./addMailboxes-1.0.1-linux -i usuarios_info.csv -s http://mailcow-ip -a OMJUBGT-QWEASD-QAZWSX-EDCRFV-TGBYHN
 
 Requirements
 
@@ -13,7 +14,7 @@ Requirements
 
 Usage
 
-    Save the script as export_zimbra_users.sh.
+    Save the script as export_zimbra_users.sh
 
     Make the script executable:
     bash
@@ -24,7 +25,7 @@ Run the script:
 
     ./export_zimbra_users.sh
 
-    The user account information will be saved in a file named usuarios_info.txt.
+    The user account information will be saved in a file named usuarios_info.csv
 
 Notes
 

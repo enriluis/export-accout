@@ -7,7 +7,7 @@ OUTPUT_FILE="user_info.csv"
 > "$OUTPUT_FILE"
 
 # Set Quota (ej, 2048)
-QUOTA=2048
+QUOTA=4096
 
 # Iterate over user account email stored in zimbra ldap
 for i in $(zmprov -l gaa | egrep -v 'galsync|spam|ham|virus|stimpson'); do

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # output file
-OUTPUT_FILE="user_info.svc"
+OUTPUT_FILE="user_info.csv"
 
 # Empty file if exist
 > "$OUTPUT_FILE"

@@ -1,42 +1,49 @@
 #!/bin/bash
 
-# Inout flie exported by the other script
-INPUT_FILE="user_info.csv"
+# run this script from inside you dovecot mailcow container
 
-# check if file exist
+INPUT_FILE="user_list.txt"
+
+# Chek if user exist
 if [[ ! -f "$INPUT_FILE" ]]; then
-    echo "The File  $INPUT_FILE do not exist."
+    echo "El archivo $INPUT_FILE no existe."
     exit 1
 fi
 
-# Iterate ove each line int file
-while IFS=',' read -r EMAIL DISPLAY_NAME PASSWORD QUOTA; do
-    # run imapsync
-    docker compose exec dovecot-mailcow /usr/local/bin/imapsync \
+# get username and passwd
+output=$(cat /etc/sogo/sieve.creds)
+master_user=$(echo "$output" | awk -F':' '{print $1}')
+master_pwd=$(echo "$output" | awk -F':' '{print $2}')
+
+echo "Starting sync from $INPUT_FILE..."
+
+#  read all lines of the input file
+while IFS= read -r EMAIL; do
+    if [[ -z "$EMAIL" ]]; then
+        continue
+    fi
+
+    echo "Proscesing: $EMAIL"
+    
+    /usr/local/bin/imapsync \
         --tmpdir /tmp \
         --nofoldersizes \
         --addheader \
         --delete2duplicates \
         --subscribeall \
         --automap \
-        --host1 192.168.0.8 \
+        --host1 ******* \
         --user1 "$EMAIL" \
         --authuser1 admin \
-        --password1 "cmlk.c0.cu" \
+        --password1 "*******" \
         --port1 143 \
         --host2 localhost \
-        --user2 "${EMAIL}*uo7yl4npslq0hm4f@mailcow.local" \
-        --password2 "jq1yvz665gzzyav8zk9kgbmo" \
+        --user2 "${EMAIL}*${master_user}" \
+        --password2 "${master_pwd}" \
         --authmech2 LOGIN \
         --nossl2 \
         --notls2 \
         --no-modulesversion \
-        --noreleasecheck
+        --noreleasecheck \
 
-    # check if all is ok 
-    if [[ $? -ne 0 ]]; then
-        echo "Error sync: $EMAIL"
-    else
-        echo "Sync ok : $EMAIL"
-    fi
 done < "$INPUT_FILE"

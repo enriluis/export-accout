@@ -29,5 +29,7 @@ Run the script:
 
 Notes
 
-    Ensure that your Zimbra server is running and that you have the necessary permissions to access the LDAP database.
-    The output file contains the email address, display name, password hash, and a constant quota value (e.g., 2048).
+    Ensure that your Zimbra server is running and that you have the necessary 
+    permissions to access the LDAP database. The output file contains the email 
+    address, display name, password hash, and a constant quota value (e.g., 2048).
+    Remember run the scipt as zimbra user.
